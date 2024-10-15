@@ -38,8 +38,8 @@ function App() {
           </thead>
           <tbody>
             <tr>
-              <td>{apiData.title || 'N/A'}</td>
-              <td>{apiData.description || 'N/A'}</td>
+              <td>{apiData.title || 'Hello'}</td>
+              <td>{apiData.description || 'test the data'}</td>
               <td>{apiData.dueDate ? new Date(apiData.dueDate).toLocaleDateString() : 'N/A'}</td>
               <td>{apiData.completed ? 'Yes' : 'No'}</td>
               <td>{apiData.createdAt ? new Date(apiData.createdAt).toLocaleDateString() : 'N/A'}</td>
