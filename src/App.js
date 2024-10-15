@@ -1,32 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import TaskForm from './component/TaskForm';
+import TaskList from './component/TaskList';
+import './index.css';
 
-function App() {
-  const [apiData, setApiData] = useState('');
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/tasks'); // Replace with your API
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
 
+  // Fetch tasks from the backend when the component loads
   useEffect(() => {
-    const getApiData = async () => { 
-      try {
-        const response = await fetch('https://www.example.com'); 
-        const data = await response.json();
-        console.log(data);
-        setApiData(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getApiData();
-  }, []); 
+   
+    fetchTasks();
+  }, []);
+
+  // Add new task to the backend and update the state
+  const handleTaskAdded = async (newTask) => {
+    try {
+      const response = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ task: newTask }),
+      });
+      const result = await response.json();
+      setTasks((prevTasks) => [...prevTasks, result.task]);
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <h1>API Data:</h1>
-        <pre>{JSON.stringify(apiData, null, 2)}</pre>
-      </div>
-    </>
+    <div className="app">
+      <h1>Task Manager</h1>
+      <TaskForm onTaskAdded={handleTaskAdded} />
+      <TaskList tasks={tasks} />
+    </div>
   );
-}
+};
 
 export default App;
