@@ -10,10 +10,8 @@ const TaskForm = ({ onTaskAdded }) => {
     e.preventDefault();
     const newTask = { title, description, dueDate, completed };
     
-    // Send task data to the parent component (App) for API handling
+    
     onTaskAdded(newTask);
-
-    // Clear form inputs
     setTitle('');
     setDescription('');
     setDueDate('');
