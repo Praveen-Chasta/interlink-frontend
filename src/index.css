@@ -7,10 +7,16 @@
   margin-bottom: 20px;
 }
 
-.task-form input {
+.task-form input,
+.task-form textarea {
+  display: block;
+  margin: 10px 0;
   padding: 10px;
-  margin-right: 10px;
   width: 300px;
+}
+
+.task-form label {
+  margin-right: 10px;
 }
 
 .task-form button {
@@ -24,7 +30,11 @@
 
 .task-list li {
   background-color: #f4f4f4;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 4px;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.task-list h3 {
+  margin: 0;
 }

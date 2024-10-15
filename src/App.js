@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import TaskForm from './component/TaskForm';
-import TaskList from './component/TaskList';
-import './index.css';
+import TaskForm from './components/TaskForm';
+import TaskList from './components/TaskList';
+import './styles.css';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/tasks'); // Replace with your API
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
 
   // Fetch tasks from the backend when the component loads
   useEffect(() => {
-   
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/tasks'); // Replace with your API
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
     fetchTasks();
   }, []);
 
@@ -29,10 +28,10 @@ const App = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ task: newTask }),
+        body: JSON.stringify(newTask),
       });
       const result = await response.json();
-      setTasks((prevTasks) => [...prevTasks, result.task]);
+      setTasks((prevTasks) => [...prevTasks, result]);
     } catch (error) {
       console.error('Error adding task:', error);
     }

@@ -1,25 +1,54 @@
 import React, { useState } from 'react';
 
 const TaskForm = ({ onTaskAdded }) => {
-  const [task, setTask] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [completed, setCompleted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (task.trim()) {
-      // Send task data to parent (for API handling)
-      onTaskAdded(task);
-      setTask(''); // Clear the input
-    }
+    const newTask = { title, description, dueDate, completed };
+    
+    // Send task data to the parent component (App) for API handling
+    onTaskAdded(newTask);
+
+    // Clear form inputs
+    setTitle('');
+    setDescription('');
+    setDueDate('');
+    setCompleted(false);
   };
 
   return (
     <form onSubmit={handleSubmit} className="task-form">
       <input
         type="text"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-        placeholder="Add a new task"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+        required
       />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Description"
+        required
+      />
+      <input
+        type="date"
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+        required
+      />
+      <label>
+        Completed:
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={(e) => setCompleted(e.target.checked)}
+        />
+      </label>
       <button type="submit">Add Task</button>
     </form>
   );
